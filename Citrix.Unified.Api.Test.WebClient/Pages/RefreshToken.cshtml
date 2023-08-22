@@ -1,0 +1,17 @@
+﻿@page
+@model Citrix.Unified.Api.Test.WebClient.Pages.RefreshTokenModel
+@{
+}
+
+
+<div class="text-center">
+    <p>Access Token: @Model.MaskedAccessToken</p>
+    <p>Refresh Token: @Model.MaskedRefreshToken</p>
+    <p>Expires: @Model.Expires</p>
+</div>
+
+<div class="text-center">
+    <form asp-page="RefreshToken">
+        <input type="submit" value="Refresh Token"/>
+    </form>
+</div>

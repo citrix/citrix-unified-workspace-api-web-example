@@ -1,0 +1,25 @@
+﻿@page
+@model Citrix.Unified.Api.Test.WebClient.Pages.SignInModel
+@{
+    Layout = "_LayoutUnauthenticated";
+}
+@{
+    <form method="post">
+        <table>
+            <tr>
+                <td><label>Citrix Customer Domain</label></td>
+                <td><input asp-for="@Model.CustomerDomain" size="40"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Login"/></td>
+            </tr>
+            @if (@Model.ErrorMessage != null)
+            {
+                <tr>
+                    <td rowspan="2">@Model.ErrorMessage</td>
+                </tr>
+            }
+        </table>
+    </form>
+}

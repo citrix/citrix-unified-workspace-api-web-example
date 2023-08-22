@@ -1,0 +1,33 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h2>You are logged into @Model.Domain</h2>
+    
+    <div class="card-layout">
+        @if(Model.Resources != null)
+                    {
+            @foreach (var resource in Model.Resources)
+            {
+                <div class="card-item">
+                    <img src="@resource.Links.ImageUrl" alt=""/>
+                    <div class="card-item-footer">
+                        <form asp-page="Launch" method="post" target="_blank">
+                            <input type="hidden" name="Id" value="@resource.ResourceId"/>
+                            <input type="hidden" name="ProtectedLaunchStatusUrl" value="@Model.Protect(resource.Links.LaunchStatusUrl)"/>
+                            <input type="submit" value="@resource.Name"/>
+                        </form>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Unable to load resources</p>
+        }
+    </div>
+    
+</div>

@@ -1,0 +1,47 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.card-layout {
+    display: flex;
+    /* Put a card in the next row when previous cards take all width */
+    flex-wrap: wrap;
+    margin-left: -0.25rem;
+    margin-right: -0.25rem;
+}
+
+.card-item {
+    border: 1px solid #ddd;
+   
+    /* There will be 3 cards per row */
+    flex-basis: 10rem;
+    /* flex-basis: 20rem; */
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+}
+
+.card-item-footer {
+    width: 8rem;
+    text-align: center;
+}
+
+.card-item img {
+  
+    width:  8rem;
+    height: 8rem;
+}

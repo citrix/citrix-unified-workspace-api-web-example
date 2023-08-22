@@ -1,0 +1,23 @@
+﻿@page
+@model LaunchModel
+@{
+    ViewData["Title"] = "Launch";
+}
+<div class="text-center">
+    @if (Model.Retry is true)
+    {
+        <p>Launch unavailable.</p>
+            <form asp-page="Launch" method="post">
+            <input type="hidden" name="Id" value="@Model.Id"/>
+                <input type="hidden" name="ProtectedLaunchStatusUrl" value="@Model.ProtectedLaunchStatusUrl"/>
+                <input type="submit" value="Retry"/>
+        </form>
+    }else if (Model.ErrorMessage != null)
+    {
+        <p>Unable to Launch - @Model.ErrorMessage</p>
+    }
+    else
+    {
+        <p>Unable to Launch</p>
+    }
+</div>
