@@ -12,7 +12,7 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
     {
         public record WspResource(string? ResourceId, string? Name, bool? Enabled, Links Links);
 
-        public record Links(string ImageUrl, string LaunchStatusUrl);
+        public record Links(string ImageUrl, string LaunchStatusUrl, string LaunchUrl);
     }
 
     public record WspResourceLaunchDto(

@@ -86,6 +86,7 @@ services.AddHttpClient("apiClient", configureClient: client =>
 services.AddSingleton<ResourcesClient>();
 
 services.AddTransient<CitrixHttpMessageHandler>();
+services.AddControllers();
 
 var app = builder.Build();
 
@@ -105,5 +106,7 @@ app.UseRouting();
 app.UseAuthentication();
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();

@@ -49,5 +49,18 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
             return await httpResponseMessage.Content.ReadFromJsonAsync<WspResourceLaunchDto>()
                    ?? throw new InvalidOperationException();
         }
+        
+        public async Task<string> GetIcaFile(string launchUrl)
+        {
+            var httpClient = _httpClientFactory.CreateClient("apiClient");
+
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, launchUrl);
+            var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
+
+            httpResponseMessage.EnsureSuccessStatusCode();
+
+            return await httpResponseMessage.Content.ReadAsStringAsync()
+                   ?? throw new InvalidOperationException();
+        }
     }
 }

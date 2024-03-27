@@ -76,6 +76,44 @@ You can view the Token information by going to the `/RefreshToken` endpoint:
 
 ![Refresh](./screenshots/RefreshToken.PNG)
 
+## Resource launches
+
+This example supports three types of launch, native, HTML5, and IFrame.
+
+You can switch between the launch types using the dropdown:
+
+![Launch Types dropdown](./screenshots/launch_types_dropdown.png)
+
+### Native (Receiver) launches
+
+Native launches work by calling the native receiver with a launch ticket that can obtained from the `launchstatus` endpoint on a resource. This response contains the URL to redirect the user to.
+
+### HTML5 and IFrame launches
+
+HTML5 and IFrame launches work similarly to each other. These launch methods make use of the Citrix HTML5 HDX SDK. This SDK uses the ICA file which contains information about how a connection should be established. An ICA file can be obtained from the `launchica` endpoint on a resource.
+
+![HTML Launch Flow](./sequence/html5-launch-flow.png)
+
+Source code to launch a resource in a new tab. For more information check the [SDK documentation](https://developer-docs.citrix.com/en-us/citrix-workspace-app-for-html5/workspace-app-html5-hdx-sdx/hdx-sdk-html5)
+
+```js
+citrix.receiver.setPath("https://localhost:7182/receiver"); 
+let icaFile = await apiHandler.get(launchUrl)
+const sessionId = "html5"
+const connectionParams = {
+    "launchType": "newtab",
+    "container": {
+        "type": "window"
+    }
+};
+
+function sessionCreated(sessionObject){
+    const launchData = {"type": "ini", value: icaFile.data};
+    sessionObject.start(launchData);
+}
+citrix.receiver.createSession(sessionId, connectionParams,sessionCreated);
+```
+
 ## What could go wrong
 
 If you are presented with this page:
