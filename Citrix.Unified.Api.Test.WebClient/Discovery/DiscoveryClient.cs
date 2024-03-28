@@ -32,7 +32,9 @@ public class DiscoveryClient
 
             var uri = new UriBuilder(customerDomain)
             {
-                Path = $"/api/discovery/configurations"
+                Path = $"/api/discovery/configurations",
+                Scheme = "https" ,
+                Port = 443
             }.Uri;
 
             var httpClient = _httpClientFactory.CreateClient(nameof(DiscoveryClient));

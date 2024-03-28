@@ -12,14 +12,15 @@
                     {
             @foreach (var resource in Model.Resources)
             {
-                <div class="card-item">
+                <div class="card-item" onclick="PerformLaunch(this)" data-launchIca="@Model.Protect(@resource.Links.LaunchUrl)">
                     <img src="@resource.Links.ImageUrl" alt=""/>
                     <div class="card-item-footer">
+                        @resource.Name
                         <form asp-page="Launch" method="post" target="_blank">
                             <input type="hidden" name="Id" value="@resource.ResourceId"/>
                             <input type="hidden" name="ProtectedLaunchStatusUrl" value="@Model.Protect(resource.Links.LaunchStatusUrl)"/>
-                            <input type="submit" value="@resource.Name"/>
                         </form>
+                        
                     </div>
                 </div>
             }
@@ -30,4 +31,5 @@
         }
     </div>
     
+    <iframe id="sessionIframe"></iframe>
 </div>

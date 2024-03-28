@@ -1,0 +1,18 @@
+@startuml "html5-launch-flow"
+
+title Web Client - HTML5/IFrame Launch Flow
+skinparam DefaultTextAlignment Center
+skinparam monochrome true
+autonumber
+participant "Browser" as browser 
+participant "Web Client application" as wca
+participant "Workspace API" as wspapi
+participant "Html5 Tab" as tab 
+
+== Html5 ICA file launch flow ==
+browser -> wca : Ica Launch
+wca -> wspapi : GET customer.cloud.com/api/store/resources/{resourceId}/ica\n [Access Token]
+wspapi --> wca : ICA file
+wca -> browser: Pass ICA file to HTML5 SDK
+browser -> tab : Open SessionWindow.html in a new tab
+@enduml
