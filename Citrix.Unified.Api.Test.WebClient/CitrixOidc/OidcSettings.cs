@@ -13,6 +13,8 @@ public record OidcSettings
     public string? ClientId { get; set; }
 
     public string? ClientSecret { get; set; }
+    
+    public string? ApplicationId { get; set; }
 
     public string? CallbackPath { get; set; } = "/callback";
 

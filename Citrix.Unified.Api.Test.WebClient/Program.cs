@@ -79,6 +79,7 @@ services.AddSingleton<DiscoveryClient>();
 services.AddHttpClient("apiClient", configureClient: client =>
 {
     client.DefaultRequestHeaders.UserAgent.ParseAdd("Citrix WebApp Example - API HttpClient");
+    client.DefaultRequestHeaders.Add("Citrix-ApplicationId", oidcSettings.ApplicationId);
 })
     .AddHttpMessageHandler<CitrixHttpMessageHandler>()
     .AddUserAccessTokenHandler();
