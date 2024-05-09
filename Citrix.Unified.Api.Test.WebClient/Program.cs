@@ -72,7 +72,13 @@ services.AddDataProtection();
 
 services.AddHealthChecks();
 
-services.AddHttpClient(nameof(DiscoveryClient));
+services.AddHttpClient(nameof(DiscoveryClient), configureClient: client =>
+{
+    client.DefaultRequestHeaders.UserAgent.ParseAdd("Citrix WebApp Example - API HttpClient");
+    client.DefaultRequestHeaders.Add("Citrix-ApplicationId", oidcSettings.ApplicationId);
+})
+    .AddHttpMessageHandler<CitrixHttpMessageHandler>();
+    
 services.AddMemoryCache();
 services.AddSingleton<DiscoveryClient>();
 

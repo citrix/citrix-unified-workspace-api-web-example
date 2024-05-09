@@ -13,7 +13,7 @@
             @foreach (var resource in Model.Resources)
             {
                 <div class="card-item" onclick="PerformLaunch(this)" data-launchIca="@Model.Protect(@resource.Links.LaunchUrl)">
-                    <img src="@resource.Links.ImageUrl" alt=""/>
+                    <img src="@Model.AddApplicationIdToNonCdnImageEndpoint(resource.Links.ImageUrl)" alt="" />
                     <div class="card-item-footer">
                         @resource.Name
                         <form asp-page="Launch" method="post" target="_blank">
