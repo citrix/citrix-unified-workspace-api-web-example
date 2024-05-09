@@ -22,6 +22,7 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
         string? ServerProtocolVersion,
         string? FileFetchTicket,
         string? FileFetchStaTicket,
+        string? ReceiverUri,
         string? ErrorId,
         bool? SuggestRestart,
         string? RetryUrl

@@ -5,7 +5,6 @@
 */
 
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 using Citrix.Unified.Api.Test.WebClient.Resources;
 
@@ -72,10 +71,8 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
             {
                 case "success":
                     {
-                        var receiverUrl = BuildReceiverUrl(launchData);
-
-                        _logger.LogInformation("Sending to CWA url, {receiverUrl}", receiverUrl);
-                        return Redirect(receiverUrl);
+                        _logger.LogInformation("Sending to CWA url, {ReceiverUri}", launchData.ReceiverUri);
+                        return Redirect(launchData.ReceiverUri);
                     }
                 case "retry":
                     Retry = true;
@@ -89,36 +86,6 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
         public string UnProtect(string protectedUrl)
         {
             return _dataProtectionProvider.CreateProtector("LaunchStatusUrl").Unprotect(protectedUrl);
-        }
-
-        private static string BuildReceiverUrl(WspResourceLaunchDto launchData)
-        {
-            var queryString = QueryString.Create(new Dictionary<string, string?>()
-            {
-                {"action", "launch"},
-                {"transport", "https"},
-                {"serverProtocolVersion", launchData.ServerProtocolVersion},
-                {"ticket", launchData.FileFetchTicket}
-            });
-
-            if (launchData.FileFetchStaTicket != null)
-            {
-                queryString = queryString.Add("staTicket", launchData.FileFetchStaTicket);
-            }
-
-            var base64EncodedParameters = Convert.ToBase64String(Encoding.UTF8.GetBytes(queryString.ToUriComponent()))
-                .Replace("+", "_")
-                .Replace("/", "!")
-                .Replace("=", "-");
-
-            var fetchUrl = launchData.FileFetchUrl ?? throw new InvalidOperationException("FileFetch url should not be null");
-            var uriBuilder = new UriBuilder(fetchUrl);
-
-            uriBuilder.Scheme = "receiver";
-            uriBuilder.Path = uriBuilder.Path + "/" +
-                              base64EncodedParameters;
-
-            return uriBuilder.Uri.ToString();
         }
     }
 }
