@@ -85,7 +85,7 @@ This example supports three types of launch, native, HTML5, and IFrame.
 
 You can switch between the launch types using the dropdown:
 
-![Launch Types dropdown](./screenshots/launch_types_dropdown.png)
+![Launch Types dropdown](./screenshots/launch_types_dropdown.PNG)
 
 ### Native (Receiver) launches
 
