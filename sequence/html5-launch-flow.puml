@@ -11,7 +11,7 @@ participant "Html5 Tab" as tab
 
 == Html5 ICA file launch flow ==
 browser -> wca : Ica Launch
-wca -> wspapi : GET customer.cloud.com/api/store/resources/{resourceId}/ica\n [Access Token]
+wca -> wspapi : GET https://{CUSTOMER_DOMAIN}/citrixapi/store/resources/{resourceId}/ica\n [Access Token]
 wspapi --> wca : ICA file
 wca -> browser: Pass ICA file to HTML5 SDK
 browser -> tab : Open SessionWindow.html in a new tab
