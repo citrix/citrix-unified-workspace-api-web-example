@@ -13,7 +13,7 @@ This is purely an example and shouldn't be used for real production services. Th
 ## Prerequisites
 
 - You have either a Private or Public Workspace OAuth Client
-- You will be running the example code in Visual Studio and can run [.NET 7.0](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+- You will be running the example code in Visual Studio and can run [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 - You have the [Citrix Workspace App](https://www.citrix.com/downloads/workspace-app/windows/workspace-app-for-windows-latest.html) installed
 
 ## Getting Started
@@ -85,7 +85,7 @@ This example supports three types of launch, native, HTML5, and IFrame.
 
 You can switch between the launch types using the dropdown:
 
-![Launch Types dropdown](./screenshots/launch_types_dropdown.png)
+![Launch Types dropdown](./screenshots/launch_types_dropdown.PNG)
 
 ### Native (Receiver) launches
 
@@ -135,4 +135,4 @@ The repo includes the following javascript libraries,
 
 ## License
 
-Copyright © 2023. Cloud Software Group, Inc. All Rights Reserved.
+Copyright © 2025. Cloud Software Group, Inc. All Rights Reserved.
