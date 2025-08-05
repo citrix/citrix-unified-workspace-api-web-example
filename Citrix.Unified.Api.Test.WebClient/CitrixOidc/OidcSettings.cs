@@ -8,7 +8,7 @@ namespace Citrix.Unified.Api.Test.WebClient.CitrixOidc;
 
 public record OidcSettings
 {
-    public string? Authority { get; set; } = "https://accounts-internal.cloud.com/core/";
+    public string? Authority { get; set; } = "https://accounts.cloud.com/core/";
 
     public string? ClientId { get; set; }
 
