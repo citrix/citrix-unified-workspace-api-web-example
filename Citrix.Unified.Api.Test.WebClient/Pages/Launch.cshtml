@@ -9,7 +9,7 @@
         <p>Launch unavailable.</p>
             <form asp-page="Launch" method="post">
             <input type="hidden" name="Id" value="@Model.Id"/>
-                <input type="hidden" name="ProtectedLaunchStatusUrl" value="@Model.ProtectedLaunchStatusUrl"/>
+            <input type="hidden" name="ProtectedFileFetchUrl" value="@Model.ProtectedFileFetchUrl" />
                 <input type="submit" value="Retry"/>
         </form>
     }else if (Model.ErrorMessage != null)

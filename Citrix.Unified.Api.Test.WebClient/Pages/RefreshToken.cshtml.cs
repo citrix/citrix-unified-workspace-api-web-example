@@ -6,20 +6,12 @@
 
 using Duende.AccessTokenManagement.OpenIdConnect;
 
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Citrix.Unified.Api.Test.WebClient.Pages
 {
     public class RefreshTokenModel : PageModel
     {
-        private readonly IUserTokenManagementService _userTokenManagementService;
-
-        public RefreshTokenModel(IUserTokenManagementService userTokenManagementService)
-        {
-            _userTokenManagementService = userTokenManagementService;
-        }
-
         public string MaskedAccessToken { get; set; }
         public string MaskedRefreshToken { get; set; }
 
@@ -28,27 +20,35 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
 
         public async Task OnGet()
         {
-            var accessTokenAsync = await _userTokenManagementService.GetAccessTokenAsync(HttpContext.User);
+            var tokenResult = await HttpContext.GetUserAccessTokenAsync();
 
-            Populate(accessTokenAsync);
+            if (tokenResult.Token != null)
+            {
+                MaskedAccessToken = Mask(tokenResult.Token.AccessToken);
+                MaskedRefreshToken = Mask(tokenResult.Token.RefreshToken);
+                Expires = tokenResult.Token.Expiration.ToString() + " -- (" + (tokenResult.Token.Expiration - DateTimeOffset.UtcNow).TotalHours + " hours from now)";
+            }
+            else
+            {
+                MaskedAccessToken = "Error retrieving token";
+            }
         }
 
         public async Task OnPost()
         {
-            await HttpContext.GetUserAccessTokenAsync(new UserTokenRequestParameters() { ForceRenewal = true });
+            // Force token renewal
+            var tokenResult = await HttpContext.GetUserAccessTokenAsync(new UserTokenRequestParameters());
 
-            var accessTokenAsync = await _userTokenManagementService.GetAccessTokenAsync(HttpContext.User);
-
-            Populate(accessTokenAsync);
-        }
-
-        public void Populate(UserToken userToken)
-        {
-
-            MaskedAccessToken = Mask(userToken.AccessToken);
-            MaskedRefreshToken = Mask(userToken.RefreshToken);
-            Expires = userToken.Expiration.ToString() + " -- (" + (userToken.Expiration - DateTimeOffset.UtcNow).TotalHours + " hours from now)";
-
+            if (tokenResult.Token != null)
+            {
+                MaskedAccessToken = Mask(tokenResult.Token.AccessToken);
+                MaskedRefreshToken = Mask(tokenResult.Token.RefreshToken);
+                Expires = tokenResult.Token.Expiration.ToString() + " -- (" + (tokenResult.Token.Expiration - DateTimeOffset.UtcNow).TotalHours + " hours from now)";
+            }
+            else
+            {
+                MaskedAccessToken = "Error refreshing token";
+            }
         }
 
         private string Mask(string? input)

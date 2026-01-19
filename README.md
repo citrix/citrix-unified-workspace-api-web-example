@@ -13,7 +13,7 @@ This is purely an example and shouldn't be used for real production services. Th
 ## Prerequisites
 
 - You have either a Private or Public Workspace OAuth Client
-- You will be running the example code in Visual Studio and can run [.NET 8.0](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
+- You will be running the example code in Visual Studio and can run [.NET 10.0](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
 - You have the [Citrix Workspace App](https://www.citrix.com/downloads/workspace-app/windows/workspace-app-for-windows-latest.html) installed
 
 ## Getting Started
@@ -30,7 +30,7 @@ For this to work out of the box, your Workspace OAuth Client will need to have `
 
 To configure the Workspace OAuth Client settings - including secrets - use the dotnet user secrets feature. See https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-6.0&tabs=windows.
 
-These settings will be related to OAuth clients created in the Citrix Cloud Admin Console - see [the documentation](https://developer-docs.citrix.com/en-us/workspace-platform/unified-workspace-api-preview/oauth-client-management) for details on how to create one.
+These settings will be related to OAuth clients created in the Citrix Cloud Admin Console - see [the documentation](https://developer-docs.citrix.com/en-us/workspace-platform/workspace-api/oauth-client-management) for details on how to create one.
 
 Example:
 ```json
@@ -61,7 +61,7 @@ Once started, you should be directed to the login page:
 
 ![Login Screen](./screenshots/Login.PNG)
 
-At this point, enter your customer.cloud.com address and hit 'login'.
+At this point, enter your customer domain address and hit 'login'.
 
 It should direct you to the standard login flow and after entering your login details it will take you to the home page:
 
@@ -87,13 +87,14 @@ You can switch between the launch types using the dropdown:
 
 ![Launch Types dropdown](./screenshots/launch_types_dropdown.PNG)
 
-### Native (Receiver) launches
+### "Receiver" Ticketed ICA launch (Citrix Workspace App)
 
-Native launches work by calling the native receiver with a launch ticket that can obtained from the `launchstatus` endpoint on a resource. This response contains the URL to redirect the user to.
+Citrix Workspace App (CWA) launches work by calling the receiver (old name for the CWA) with a launch ticket that can obtained from the `icaFileFetchTicketUrl` endpoint on a resource (see resource enumeration response for details). 
+The API endpoint will return a `receiverUri` which can be directly opened via a browser to start the Citrix Workspace App that performs the launch.
 
 ### HTML5 and IFrame launches
 
-HTML5 and IFrame launches work similarly to each other. These launch methods make use of the Citrix HTML5 HDX SDK. This SDK uses the ICA file which contains information about how a connection should be established. An ICA file can be obtained from the `launchica` endpoint on a resource.
+HTML5 and IFrame launches work similarly to each other. These launch methods make use of the Citrix HTML5 HDX SDK. This SDK uses the ICA file which contains information about how a connection should be established. An ICA file can be obtained from the `icaFileUrl` endpoint on a resource.
 
 ![HTML Launch Flow](./sequence/html5-launch-flow.png)
 
@@ -135,4 +136,4 @@ The repo includes the following javascript libraries,
 
 ## License
 
-Copyright © 2025. Cloud Software Group, Inc. All Rights Reserved.
+Copyright © 2026. Cloud Software Group, Inc. All Rights Reserved.

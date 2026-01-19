@@ -12,16 +12,12 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
     {
         public record WspResource(string? ResourceId, string? Name, bool? Enabled, Links Links);
 
-        public record Links(string ImageUrl, string LaunchStatusUrl, string LaunchUrl);
+        public record Links(string ImageUrl, string IcaFileFetchTicketUrl, string IcaFileUrl);
     }
 
     public record WspResourceLaunchDto(
         string? Status,
         int? PollTimeout,
-        string? FileFetchUrl,
-        string? ServerProtocolVersion,
-        string? FileFetchTicket,
-        string? FileFetchStaTicket,
         string? ReceiverUri,
         string? ErrorId,
         bool? SuggestRestart,

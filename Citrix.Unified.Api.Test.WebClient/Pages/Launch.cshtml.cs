@@ -38,7 +38,7 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
 
         [BindProperty]
         [Required]
-        public string ProtectedLaunchStatusUrl { get; set; }
+        public string ProtectedFileFetchUrl { get; set; }
 
         public IActionResult OnGet()
         {
@@ -54,12 +54,12 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
                 return BadRequest();
             }
 
-            var launchStatusUrl = UnProtect(ProtectedLaunchStatusUrl);
+            var fileFetchUrl = UnProtect(ProtectedFileFetchUrl);
 
             WspResourceLaunchDto launchData;
             try
             {
-                launchData = await _resourcesClient.AttemptLaunch(launchStatusUrl);
+                launchData = await _resourcesClient.AttemptLaunch(fileFetchUrl);
             }
             catch
             {
@@ -85,7 +85,7 @@ namespace Citrix.Unified.Api.Test.WebClient.Pages
 
         public string UnProtect(string protectedUrl)
         {
-            return _dataProtectionProvider.CreateProtector("LaunchStatusUrl").Unprotect(protectedUrl);
+            return _dataProtectionProvider.CreateProtector("FileFetchUrl").Unprotect(protectedUrl);
         }
     }
 }

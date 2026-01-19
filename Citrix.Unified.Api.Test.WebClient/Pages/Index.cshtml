@@ -12,13 +12,13 @@
                     {
             @foreach (var resource in Model.Resources)
             {
-                <div class="card-item" onclick="PerformLaunch(this)" data-launchIca="@Model.Protect(@resource.Links.LaunchUrl)">
+                <div class="card-item" onclick="PerformLaunch(this)" data-launchIca="@Model.Protect(@resource.Links.IcaFileUrl)">
                     <img src="@Model.AddApplicationIdToNonCdnImageEndpoint(resource.Links.ImageUrl)" alt="" />
                     <div class="card-item-footer">
                         @resource.Name
                         <form asp-page="Launch" method="post" target="_blank">
                             <input type="hidden" name="Id" value="@resource.ResourceId"/>
-                            <input type="hidden" name="ProtectedLaunchStatusUrl" value="@Model.Protect(resource.Links.LaunchStatusUrl)"/>
+                            <input type="hidden" name="ProtectedFileFetchUrl" value="@Model.Protect(resource.Links.IcaFileFetchTicketUrl)" />
                         </form>
                         
                     </div>

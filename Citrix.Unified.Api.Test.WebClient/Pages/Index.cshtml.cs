@@ -60,7 +60,7 @@ public class IndexModel : PageModel
 
     public string AddApplicationIdToNonCdnImageEndpoint(string url)
     {
-        if (url.Contains("api/store/resources/images"))
+        if (url.Contains("citrixapi/store/resources/images"))
         {
             return url + "?ApplicationId=" + _applicationId;
         }
@@ -72,6 +72,6 @@ public class IndexModel : PageModel
 
     public string Protect(string url)
     {
-        return _dataProtectionProvider.CreateProtector("LaunchStatusUrl").Protect(url);
+        return _dataProtectionProvider.CreateProtector("FileFetchUrl").Protect(url);
     }
 }

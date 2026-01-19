@@ -37,11 +37,11 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
             return readFromJsonAsync!.Resources;
         }
 
-        public async Task<WspResourceLaunchDto> AttemptLaunch(string launchStatusUrl)
+        public async Task<WspResourceLaunchDto> AttemptLaunch(string fileFetchUrl)
         {
             var httpClient = _httpClientFactory.CreateClient("apiClient");
 
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, launchStatusUrl);
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, fileFetchUrl);
             var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
             httpResponseMessage.EnsureSuccessStatusCode();
@@ -50,11 +50,11 @@ namespace Citrix.Unified.Api.Test.WebClient.Resources
                    ?? throw new InvalidOperationException();
         }
         
-        public async Task<string> GetIcaFile(string launchUrl)
+        public async Task<string> GetIcaFile(string icaFileUrl)
         {
             var httpClient = _httpClientFactory.CreateClient("apiClient");
 
-            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, launchUrl);
+            var httpRequestMessage = new HttpRequestMessage(HttpMethod.Get, icaFileUrl);
             var httpResponseMessage = await httpClient.SendAsync(httpRequestMessage);
 
             httpResponseMessage.EnsureSuccessStatusCode();
