@@ -21,10 +21,11 @@ namespace Citrix.Unified.Api.Test.WebClient.Controllers
             _dataProtectionProvider = dataProtectionProvider;
         }
 
+        // Called by wwwroot/js/site.js
         [HttpGet("icafile", Name ="GetIceFileProxy")]
         public async Task<string> GetIcaFileProxy([FromQuery] string launchUrl)
         {
-            var targetUrl = _dataProtectionProvider.CreateProtector("LaunchStatusUrl").Unprotect(launchUrl);
+            var targetUrl = _dataProtectionProvider.CreateProtector("FileFetchUrl").Unprotect(launchUrl);
             return await _resourcesClient.GetIcaFile(targetUrl);
 
         }

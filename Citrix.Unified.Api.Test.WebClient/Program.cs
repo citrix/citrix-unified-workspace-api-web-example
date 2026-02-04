@@ -9,9 +9,11 @@ using Citrix.Unified.Api.Test.WebClient.CitrixOidc;
 using Citrix.Unified.Api.Test.WebClient.Discovery;
 using Citrix.Unified.Api.Test.WebClient.Resources;
 
-using Microsoft.AspNetCore.Authentication;
+using Duende.AccessTokenManagement.OpenIdConnect;
+
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Extensions.Http;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,7 +41,8 @@ services.AddAuthentication(options =>
             // automatically revoke refresh token at signout time
             options.Events.OnSigningOut = async e =>
             {
-                await e.HttpContext.RevokeRefreshTokenAsync();
+                var tokenStore = e.HttpContext.RequestServices.GetRequiredService<IUserTokenStore>();
+                await tokenStore.ClearTokenAsync(e.HttpContext.User);
             };
 
         }
@@ -61,10 +64,7 @@ services.AddAuthentication(options =>
         options.UseTokenLifetime = true;
     });
 
-builder.Services.AddOpenIdConnectAccessTokenManagement(options =>
-{
-
-});
+services.AddOpenIdConnectAccessTokenManagement();
 
 services.AddRazorPages();
 
@@ -82,13 +82,19 @@ services.AddHttpClient(nameof(DiscoveryClient), configureClient: client =>
 services.AddMemoryCache();
 services.AddSingleton<DiscoveryClient>();
 
-services.AddHttpClient("apiClient", configureClient: client =>
+services.AddUserAccessTokenHttpClient("apiClient", configureClient: (Action<HttpClient>)(client =>
 {
     client.DefaultRequestHeaders.UserAgent.ParseAdd("Citrix WebApp Example - API HttpClient");
     client.DefaultRequestHeaders.Add("Citrix-ApplicationId", oidcSettings.ApplicationId);
-})
-    .AddHttpMessageHandler<CitrixHttpMessageHandler>()
-    .AddUserAccessTokenHandler();
+}));
+
+services.Configure<HttpClientFactoryOptions>("apiClient", options =>
+{
+    options.HttpMessageHandlerBuilderActions.Add(builder =>
+    {
+        builder.AdditionalHandlers.Insert(0, builder.Services.GetRequiredService<CitrixHttpMessageHandler>());
+    });
+});
 
 services.AddSingleton<ResourcesClient>();
 
